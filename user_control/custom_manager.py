@@ -1,5 +1,3 @@
-from multiprocessing.sharedctypes import Value
-from django.db import models
 from django.contrib.auth.models import (BaseUserManager,PermissionsMixin, AbstractBaseUser)
 
 
@@ -27,6 +25,3 @@ class CustomUserManager(BaseUserManager):
 
         return user
 
-
-class CustomUser(AbstractBaseUser,PermissionsMixin):
-    pass
