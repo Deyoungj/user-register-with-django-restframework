@@ -1,11 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
-from .serializers import CustomUserSerializer, CustomUser
+from .serializers import CreateUserSerializer, CustomUser
 from rest_framework.response import Response
 from rest_framework import status
 
 class UserViewSet(ModelViewSet):
     http_method_names = ['post']
-    serializer_class= CustomUserSerializer
+    serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
 
     def create(self, request):
