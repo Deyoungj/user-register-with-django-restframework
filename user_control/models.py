@@ -4,7 +4,7 @@ from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
 
 from .custom_manager import CustomUserManager
 
-ROLE = (('admin','admin'), ('staff','staff'))
+Role = (('admin','admin'), ('staff','staff'))
 
 
 class CustomUser(AbstractBaseUser,PermissionsMixin):
