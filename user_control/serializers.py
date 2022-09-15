@@ -9,4 +9,5 @@ class CreateUserSerializer(serializers.Serializer):
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    password = serializers.CharField()
+    password = serializers.CharField(required=False)
+    is_new_user = serializers.BooleanField(default=False, required=False)
