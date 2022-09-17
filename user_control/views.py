@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from .serializers import CreateUserSerializer, CustomUser
+from .serializers import CreateUserSerializer, CustomUser, LoginSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -11,9 +11,21 @@ class UserViewSet(ModelViewSet):
     def create(self, request):
         valid_request =  self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
-
+        print('User created: with data: '**valid_request)
+        print('User created: with valid data: '**valid_request.validated_data)
         CustomUser.objects.create(**valid_request.validated_data)
         return Response(
             {"success":"User created successfully"},
             status=status.HTTP_201_CREATED
         )
+
+class LoginViewset(ModelViewSet):
+    http_method_names = ['post']
+    serializer_class = LoginSerializer()
+    queryset = CustomUser.objects.all()
+
+    def create(self, request):
+        valid_request = self.serializer_class(data=request.data)
+        valid_request.is_valid(raise_exception=True)
+
+        user = valid_request.validated_data["is_new_user"]
