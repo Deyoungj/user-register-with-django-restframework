@@ -29,3 +29,15 @@ class LoginViewset(ModelViewSet):
         valid_request.is_valid(raise_exception=True)
 
         user = valid_request.validated_data["is_new_user"]
+
+        if user:
+            user = CustomUser.objects.filter(email = valid_request.validated_data["email"])
+
+            if user:
+                user = user[0]
+                if not user.password:
+                    return Response({'user_id': user.id})
+                else:
+                    raise Exception('user already has Password')
+            
+

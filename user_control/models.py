@@ -10,11 +10,10 @@ Role = (('admin','admin'), ('staff','staff'))
 class CustomUser(AbstractBaseUser,PermissionsMixin):
     fullname = models.CharField(max_length=255, blank=True)
     email = models.EmailField( unique=True)
-    role = models.CharField(max_length=100, choices=ROLE)
+    role = models.CharField(max_length=100, choices=Role)
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
     is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     last_login = models.DateTimeField(null=True)
 
