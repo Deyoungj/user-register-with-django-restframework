@@ -43,7 +43,13 @@ class LoginViewset(ModelViewSet):
 
         user = authenticate(
             username= valid_request.validated_data["email"],
-            password= valid_request.validated_data["password"]
+            password= valid_request.validated_data("password",None)
         )
             
+        if not user:
+            return Response({'error': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        access = get_access_token({'user_id': user_id}, )
+            
+
 
