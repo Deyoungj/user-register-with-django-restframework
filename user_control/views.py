@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import CreateUserSerializer, CustomUser, LoginSerializer
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from datetime import datetime, timedelta
 from rest_framework import status
 
 class UserViewSet(ModelViewSet):
@@ -49,7 +50,11 @@ class LoginViewset(ModelViewSet):
         if not user:
             return Response({'error': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
         
-        access = get_access_token({'user_id': user_id}, )
+        access = get_access_token({'user_id': user_id},1)
+
+        user.last_login = datetime.now()
+
+        return Response({'access': access}, status=status.HTTP_200_OK)
             
 
 
