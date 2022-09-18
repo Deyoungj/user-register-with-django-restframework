@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from .serializers import CreateUserSerializer, CustomUser, LoginSerializer
 from rest_framework.response import Response
+from django.contrib.auth import authenticate
 from rest_framework import status
 
 class UserViewSet(ModelViewSet):
@@ -28,9 +29,9 @@ class LoginViewset(ModelViewSet):
         valid_request = self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
 
-        user = valid_request.validated_data["is_new_user"]
+        new_user = valid_request.validated_data["is_new_user"]
 
-        if user:
+        if new_user:
             user = CustomUser.objects.filter(email = valid_request.validated_data["email"])
 
             if user:
@@ -39,5 +40,10 @@ class LoginViewset(ModelViewSet):
                     return Response({'user_id': user.id})
                 else:
                     raise Exception('user already has Password')
+
+        user = authenticate(
+            username= valid_request.validated_data["email"],
+            password= valid_request.validated_data["password"]
+        )
             
 
