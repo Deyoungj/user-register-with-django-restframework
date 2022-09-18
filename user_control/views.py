@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from datetime import datetime, timedelta
 from rest_framework import status
+from .utils import get_access_token
 
 class UserViewSet(ModelViewSet):
     http_method_names = ['post']
@@ -50,9 +51,10 @@ class LoginViewset(ModelViewSet):
         if not user:
             return Response({'error': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
         
-        access = get_access_token({'user_id': user_id},1)
+        access = get_access_token({'user_id': user.id},1)
 
         user.last_login = datetime.now()
+        user.save()
 
         return Response({'access': access}, status=status.HTTP_200_OK)
             
