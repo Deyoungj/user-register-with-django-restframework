@@ -1,15 +1,18 @@
+from ast import Is
 from rest_framework.viewsets import ModelViewSet
 from .serializers import CreateUserSerializer, CustomUser, LoginSerializer
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from datetime import datetime, timedelta
+from datetime import datetime
 from rest_framework import status
 from .utils import get_access_token
+from .custom_method import IsAuthenticatedCustom
 
 class UserViewSet(ModelViewSet):
     http_method_names = ['post']
     serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
+    permission_classes = (IsAuthenticatedCustom)
 
     def create(self, request):
         valid_request =  self.serializer_class(data=request.data)

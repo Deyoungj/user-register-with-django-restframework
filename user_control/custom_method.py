@@ -2,7 +2,7 @@ from rest_framework.permissions import BasePermission
 from .utils import decodeJWT
 
 
-class IsAuthenticatedcustom(BasePermission):
+class IsAuthenticatedCustom(BasePermission):
     
     def has_permission(self, request, view):
 
