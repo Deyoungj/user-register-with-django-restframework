@@ -13,7 +13,7 @@ class LoginSerializer(serializers.Serializer):
     is_new_user = serializers.BooleanField(default=False, required=False)
 
 
-class UpdatePasswordSerializer(serializers.serializers):
+class UpdatePasswordSerializer(serializers.Serializer):
     user_id = serializers.CharField()
     password = serializers.CharField()
 
