@@ -1,7 +1,8 @@
 from ast import Is
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (CreateUserSerializer,
- CustomUser, LoginSerializer, UpdatePasswordSerializer)
+ CustomUser, LoginSerializer,
+  UpdatePasswordSerializer, CustomUserSerializer)
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from datetime import datetime
@@ -9,7 +10,7 @@ from rest_framework import status
 from .utils import get_access_token
 from .custom_method import IsAuthenticatedCustom
 
-class UserView(ModelViewSet):
+class CreateUserView(ModelViewSet):
     http_method_names = ['post']
     serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
@@ -26,7 +27,7 @@ class UserView(ModelViewSet):
             status=status.HTTP_201_CREATED
         )
 
-class LoginViewset(ModelViewSet):
+class LoginView(ModelViewSet):
     http_method_names = ['post']
     serializer_class = LoginSerializer()
     queryset = CustomUser.objects.all()
@@ -88,4 +89,9 @@ class UpdatePasswordView(ModelViewSet):
 class MeView(ModelViewSet):
     http_method_names = ['get']
     queryset = CustomUser.objects.all()
-    
+    serializer_class = CustomUserSerializer
+    permission_classes = (IsAuthenticatedCustom,)
+
+    def list(self, request):
+        data = self.serializer_class(data=request.data)
+        return Response(data)

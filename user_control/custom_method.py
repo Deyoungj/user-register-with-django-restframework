@@ -6,17 +6,16 @@ class IsAuthenticatedCustom(BasePermission):
     
     def has_permission(self, request, view):
 
-        def has_permission(request, view):
-            auth_token = request.Meta.get("HTTP_AUTHORIZATION",None)
-            if not auth_token:
-                return False
+        auth_token = request.Meta.get("HTTP_AUTHORIZATION",None)
+        if not auth_token:
+            return False
 
-            user = decodeJWT(auth_token)
+        user = decodeJWT(auth_token)
 
-            if not user:
-                return False
+        if not user:
+            return False
 
-            request.user = user
-            return True
+        request.user = user
+        return True
 
 
