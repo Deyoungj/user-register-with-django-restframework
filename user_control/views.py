@@ -9,7 +9,7 @@ from rest_framework import status
 from .utils import get_access_token
 from .custom_method import IsAuthenticatedCustom
 
-class UserViewSet(ModelViewSet):
+class UserView(ModelViewSet):
     http_method_names = ['post']
     serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
@@ -63,7 +63,7 @@ class LoginViewset(ModelViewSet):
         return Response({'access': access}, status=status.HTTP_200_OK)
             
 
-class UpdatePasswordViewset(ModelViewSet):
+class UpdatePasswordView(ModelViewSet):
     http_method_names = ['post']
     serializer_class = UpdatePasswordSerializer
     queryset = CustomUser.objects.all()
@@ -83,3 +83,9 @@ class UpdatePasswordViewset(ModelViewSet):
         user.save()
 
         return Response({'success': 'password changed successfully'})
+
+
+class MeView(ModelViewSet):
+    http_method_names = ['get']
+    queryset = CustomUser.objects.all()
+    
