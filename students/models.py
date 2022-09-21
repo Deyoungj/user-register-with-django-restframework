@@ -20,7 +20,7 @@ class Student(models.Model):
     fullname = models.CharField(max_length=255)
     gender = models.CharField(choices=GENDER_CHOICES)
     email = models.EmailField(max_length=150)
-    phone_number = models.CharFeild(max_length=15, null=True)
+    phone_number = models.CharField(max_length=15, null=True)
     next_of_kin = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=255,null=True)
     student_id = models.CharField(default=generate_student_id())
@@ -34,7 +34,7 @@ def get_due_date():
     return datetime.now() + datetime.timedelta()
 
 class PackageEnroled(models.Model):
-    packages = models.ForeignKey(Packages, related_name='packages',)
+    packages = models.ForeignKey(Package, related_name='packages',)
     student = models.ForeignKey(Student, related_name='students')
     date_enrolled = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(default=get_due_date())
