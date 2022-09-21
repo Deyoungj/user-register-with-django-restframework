@@ -1,4 +1,4 @@
-from email.policy import default
+from datetime import datetime, timedelta
 from django.db import models
 from random import choice, choices
 import string
@@ -10,21 +10,37 @@ def generate_student_id():
 GENDER_CHOICES = [('male', 'male'), ('female', 'female'),]
 
 class Packages(models.Model):
-    name = models.CharField(max_length=255)
-    def __str__(self):
-        return self.name
+    name = models.CharField(max_length=100)
+    price = models.CharField(max_length = 50)
 
-class Students(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
+    def __str__(self):
+        return f'{self.name} {self.price}'
+
+class Student(models.Model):
+    fullname = models.CharField(max_length=255)
+    gender = models.CharField(choices=GENDER_CHOICES)
+    email = models.EmailField(max_length=150)
+    phone_number = models.CharFeild(max_length=15, null=True)
+    next_of_kin = models.CharField(max_length=150, null=True)
+    address = models.CharField(max_length=255,null=True)
     student_id = models.CharField(default=generate_student_id())
     image = models.FileField(upload_to='images')
-    gender = models.CharField(choices=GENDER_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self) -> str:
-        return f'{self.first_name}, {self.last_name}, {self.email}'
 
-class PackageInstance(models.Model):
-    pass
+    def __str__(self):
+        return f'{self.fullname} {self.email}'
+
+def get_due_date():
+    return datetime.now() + datetime.timedelta()
+
+class PackageEnroled(models.Model):
+    packages = models.ForeignKey(Packages, related_name='packages',)
+    student = models.ForeignKey(Student, related_name='students')
+    date_enrolled = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateTimeField(default=get_due_date())
+    package_ended= models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f'{self.student.fullname} {self.packages.name} on {self.date_enrolled}'
+
