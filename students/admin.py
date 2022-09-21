@@ -1,3 +1,7 @@
+from importlib.resources import Package
 from django.contrib import admin
+from .models import Student, Package, PackageEnroled
 
-# Register your models here.
+admin.site.register(Student)
+admin.site.register(Package)
+admin.site.register(PackageEnroled)

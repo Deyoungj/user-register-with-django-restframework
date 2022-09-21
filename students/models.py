@@ -9,7 +9,7 @@ def generate_student_id():
 
 GENDER_CHOICES = [('male', 'male'), ('female', 'female'),]
 
-class Packages(models.Model):
+class Package(models.Model):
     name = models.CharField(max_length=100)
     price = models.CharField(max_length = 50)
 
