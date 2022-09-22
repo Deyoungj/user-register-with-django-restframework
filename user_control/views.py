@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from datetime import datetime
 from rest_framework import status
 from .utils import get_access_token
-from .custom_method import IsAuthenticatedCustom
+from ..teamCSG.custom_method import IsAuthenticatedCustom
 
 class CreateUserView(ModelViewSet):
     http_method_names = ['post']
