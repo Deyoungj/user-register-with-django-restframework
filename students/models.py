@@ -1,4 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+from enum import unique
+from dateutil.relativedelta import relativedelta
 from django.db import models
 from random import choice
 import string
@@ -10,8 +12,9 @@ def generate_student_id():
 GENDER_CHOICES = [('male', 'male'), ('female', 'female'),]
 
 class Package(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.CharField(max_length = 50)
+    name = models.CharField(max_length=100, unique=True)
+    price = models.FloatField()
+    months = models.PositiveIntegerField()
 
     def __str__(self):
         return f'{self.name} {self.price}'
@@ -19,9 +22,8 @@ class Package(models.Model):
 class Student(models.Model):
     fullname = models.CharField(max_length=255)
     gender = models.CharField(choices=GENDER_CHOICES)
-    email = models.EmailField(max_length=150)
+    email = models.EmailField(max_length=150, unique=True)
     phone_number = models.CharField(max_length=15, null=True)
-    next_of_kin = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=255,null=True)
     student_id = models.CharField(default=generate_student_id())
     image = models.FileField(upload_to='images')
@@ -30,17 +32,21 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.fullname} {self.email}'
 
-def get_due_date():
-    return datetime.now() + timedelta(month)
 
 class PackageEnroled(models.Model):
-    packages = models.ForeignKey(Package, related_name='packages', on_delete=models.CASCADE)
+    package = models.ForeignKey(Package, related_name='packages', on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name='students', on_delete=models.CASCADE)
     date_enrolled = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(default=get_due_date())
     package_ended= models.BooleanField(default=False)
 
+    def save(self,*args, **kwargs):
+        months= self.package.months
+        due_date = datetime.now() + relativedelta(months=months)
+        return super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f'{self.student.fullname} {self.packages.name} on {self.date_enrolled}'
+
 
