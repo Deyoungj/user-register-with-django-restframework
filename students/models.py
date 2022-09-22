@@ -27,6 +27,7 @@ class Student(models.Model):
     address = models.CharField(max_length=255,null=True)
     student_id = models.CharField(default=generate_student_id())
     image = models.FileField(upload_to='images')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
