@@ -1,7 +1,7 @@
-from random import choice
-import string
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
-t = ''.join(choice(string.ascii_letters + string.digits) for _ in range(15))
+t = datetime.now() + relativedelta(months=6)
 
 print(t)

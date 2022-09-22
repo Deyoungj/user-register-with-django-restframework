@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from django.db import models
-from random import choice, choices
+from random import choice
 import string
 
 def generate_student_id():
@@ -31,11 +31,11 @@ class Student(models.Model):
         return f'{self.fullname} {self.email}'
 
 def get_due_date():
-    return datetime.now() + datetime.timedelta()
+    return datetime.now() + timedelta(month)
 
 class PackageEnroled(models.Model):
-    packages = models.ForeignKey(Package, related_name='packages',)
-    student = models.ForeignKey(Student, related_name='students')
+    packages = models.ForeignKey(Package, related_name='packages', on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, related_name='students', on_delete=models.CASCADE)
     date_enrolled = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(default=get_due_date())
     package_ended= models.BooleanField(default=False)
