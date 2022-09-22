@@ -37,8 +37,8 @@ class PackageEnroled(models.Model):
     package = models.ForeignKey(Package, related_name='packages', on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name='students', on_delete=models.CASCADE)
     date_enrolled = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateTimeField(default=get_due_date())
-    package_ended= models.BooleanField(default=False)
+    due_date = models.DateTimeField(null=True)
+
 
     def save(self,*args, **kwargs):
         months= self.package.months
