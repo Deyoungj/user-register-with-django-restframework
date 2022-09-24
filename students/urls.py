@@ -5,4 +5,6 @@ router = routers.DefaultRouter()
 
 
 
-router.register('create-student')
+router.register('create-student', StudentView, 'create_student')
+router.register('package', StudentView, 'package')
+router.register('enroll-student', StudentView, 'enroll-student')
