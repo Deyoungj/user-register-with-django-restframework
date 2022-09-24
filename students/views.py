@@ -4,7 +4,7 @@ from rest_framework import status
 from .serializers import CreateStudentSerializer, CreatePackageSerializers, PackageEnrolmentSerializers
 from .models import Student, Package, PackageEnroled
  
-class CreateStudentView(ModelViewSet):
+class StudentView(ModelViewSet):
     http_method_names = ['post']
     serializer_class = CreateStudentSerializer
     queryset = Student.objects.all()
@@ -23,7 +23,7 @@ class CreateStudentView(ModelViewSet):
         )
 
 
-class CreatePackageView(ModelViewSet):
+class PackageView(ModelViewSet):
     http_method_names = ['post']
     quaryset = Package.objects.all()
     serializer_class = CreatePackageSerializers
