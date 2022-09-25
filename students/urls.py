@@ -6,5 +6,5 @@ router = routers.DefaultRouter()
 
 
 router.register('create-student', StudentView, 'create_student')
-router.register('package', StudentView, 'package')
-router.register('enroll-student', StudentView, 'enroll-student')
+router.register('package', PackageView, 'package')
+router.register('enroll-student', EnrollStudentView, 'enroll-student')
