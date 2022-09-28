@@ -35,7 +35,7 @@ class Student(models.Model):
 
 class PackageEnroled(models.Model):
     package = models.ForeignKey(Package, related_name='package', on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, related_name='student', on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, related_name='student', on_delete=models.SET_NULL, null=True)
     date_enrolled = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(null=True, blank=True)
 

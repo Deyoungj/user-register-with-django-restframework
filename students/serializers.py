@@ -4,20 +4,23 @@ from rest_framework import serializers
 from .models import Student,Package, PackageEnroled, GENDER_CHOICES
 
 
-class CreateStudentSerializer(serializers.Serializer):
-    full_name = serializers.CharField()
-    email = serializers.EmailField()
-    gender = serializers.ChoiceField(choices=GENDER_CHOICES)
-    phone_number = serializers.CharField()
-    address = serializers.CharField()
+class StudentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Student
+        fields = "__all__"
 
-
-class CreatePackageSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    price = serializers.DecimalField(max_digits=1000000, decimal_places=2)
-    months = serializers.CharField()
+class PackageSerializer(serializers.Serializer):
+    class Meta:
+        moodel = Package
+        fields = "__all__"
 
 
 class PackageEnrolmentSerializer(serializers.Serializer):
     user_id = serializers.CharField()
     package_id = serializers.CharField()
+
+class PackageEnrolmentedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PackageEnroled
+        fields = "__all__"

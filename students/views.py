@@ -24,7 +24,7 @@ class StudentView(ModelViewSet):
 
 
 class PackageView(ModelViewSet):
-    http_method_names = ['post', 'get']
+    # http_method_names = ['post', 'get']
     queryset = Package.objects.all()
     serializer_class = CreatePackageSerializer
 
