@@ -7,17 +7,17 @@ from .models import Student,Package, PackageEnroled, GENDER_CHOICES
 class CreateStudentSerializer(serializers.Serializer):
     full_name = serializers.CharField()
     email = serializers.EmailField()
-    gender = serializers.CharField(choices=GENDER_CHOICES)
+    gender = serializers.ChoiceField(choices=GENDER_CHOICES)
     phone_number = serializers.CharField()
     address = serializers.CharField()
 
 
-class CreatePackageSerializers(serializers.Serializer):
+class CreatePackageSerializer(serializers.Serializer):
     name = serializers.CharField()
-    price = serializers.DecimalField()
-    months = serializers.CharField(choices)
+    price = serializers.DecimalField(max_digits=1000000, decimal_places=2)
+    months = serializers.CharField()
 
 
-class PackageEnrolmentSerializers(serializers.Serializer):
-    user_id = serializers,CharField()
+class PackageEnrolmentSerializer(serializers.Serializer):
+    user_id = serializers.CharField()
     package_id = serializers.CharField()

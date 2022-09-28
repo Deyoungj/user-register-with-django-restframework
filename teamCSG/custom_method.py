@@ -1,5 +1,5 @@
 from rest_framework.permissions import BasePermission
-from ..user_control.utils import decodeJWT
+from user_control.utils import decodeJWT
 
 
 class IsAuthenticatedCustom(BasePermission):

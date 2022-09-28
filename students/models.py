@@ -1,5 +1,5 @@
 from datetime import datetime
-from enum import unique
+from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 from django.db import models
 from random import choice
@@ -42,7 +42,7 @@ class PackageEnroled(models.Model):
 
     def save(self,*args, **kwargs):
         months= self.package.months
-        self.due_date = datetime.now() + relativedelta(months=int(months))
+        self.due_date = timezone.now() + relativedelta(months=int(months))
         
         return super(PackageEnroled, self).save(*args, **kwargs)
 
