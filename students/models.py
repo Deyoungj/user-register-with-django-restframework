@@ -16,7 +16,7 @@ class Package(models.Model):
     months = models.PositiveIntegerField()
 
     def __str__(self):
-        return f'{self.name} -> {self.price}'
+        return self.name
 
 class Student(models.Model):
     fullname = models.CharField(max_length=255)
@@ -30,7 +30,7 @@ class Student(models.Model):
 
 
     def __str__(self):
-        return f'{self.fullname} -> {self.email}'
+        return self.email
 
 
 class PackageEnroled(models.Model):
@@ -48,6 +48,6 @@ class PackageEnroled(models.Model):
 
 
     def __str__(self):
-        return f'{self.student.fullname} {self.package.name} on {self.date_enrolled}'
+        return f'name: {self.student.fullname} package: {self.package.name} on: {self.date_enrolled}'
 
 

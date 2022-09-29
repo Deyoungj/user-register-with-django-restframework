@@ -16,11 +16,11 @@ class PackageSerializer(serializers.Serializer):
         fields = "__all__"
 
 
-class PackageEnrolmentSerializer(serializers.Serializer):
-    user_id = serializers.CharField()
-    package_id = serializers.CharField()
+# class PackageEnrolmentSerializer(serializers.Serializer):
+#     user_id = serializers.CharField()
+#     package_id = serializers.CharField()
 
-class PackageEnrolmentedSerializer(serializers.ModelSerializer):
+class PackageEnrolmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PackageEnroled
         fields = "__all__"

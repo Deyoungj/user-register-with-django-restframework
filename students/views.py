@@ -1,12 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CreateStudentSerializer, CreatePackageSerializer, PackageEnrolmentSerializer
+from .serializers import StudentSerializer, PackageSerializer, PackageEnrolmentSerializer
 from .models import Student, Package, PackageEnroled
  
 class StudentView(ModelViewSet):
     # http_method_names = ['post']
-    serializer_class = CreateStudentSerializer
+    serializer_class = StudentSerializer
     queryset = Student.objects.all()
     
     def create(self, request):
@@ -26,7 +26,7 @@ class StudentView(ModelViewSet):
 class PackageView(ModelViewSet):
     # http_method_names = ['post', 'get']
     queryset = Package.objects.all()
-    serializer_class = CreatePackageSerializer
+    serializer_class = PackageSerializer
 
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
@@ -40,17 +40,22 @@ class PackageView(ModelViewSet):
         )
 
 class EnrollStudentView(ModelViewSet):
-    http_method_names = ['post']
+    # http_method_names = ['post']
     serializer_class = PackageEnrolmentSerializer
     queryset = PackageEnroled.objects.all()
 
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
+        student = Student.objects.filter(email=valid_request.validated_data['student']).first()
+        package = Package.objects.filter(name=valid_request.validated_data['package']).first()
+
+        print(student, package)
+
 
         PackageEnroled.objects.create(
-            package=valid_request.validated_data['package_id'],
-            student= valid_request.validated_data['user_id']
+            package=package,
+            student= student
         )
 
         return Response(
