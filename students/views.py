@@ -24,9 +24,8 @@ class StudentView(ModelViewSet):
 
 
 class PackageView(ModelViewSet):
-    # http_method_names = ['post', 'get']
-    queryset = Package.objects.all()
     serializer_class = PackageSerializer
+    queryset = Package.objects.all()
 
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
@@ -47,16 +46,13 @@ class EnrollStudentView(ModelViewSet):
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
-        student = Student.objects.filter(email=valid_request.validated_data['student']).first()
-        package = Package.objects.filter(name=valid_request.validated_data['package']).first()
+        # student = Student.objects.filter(id=valid_request.validated_data['student']).first()
+        # package = Package.objects.filter(id=valid_request.validated_data['package']).first()
 
-        print(student, package)
+        print(valid_request.validated_data['student'], valid_request.validated_data['package'])
 
 
-        PackageEnroled.objects.create(
-            package=package,
-            student= student
-        )
+        PackageEnroled.objects.create(**valid_request.validated_data)
 
         return Response(
             {'success': 'enrolled student success'},

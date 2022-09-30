@@ -1,12 +1,13 @@
 import jwt
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 from django.conf import settings
 from .models import CustomUser
 
 
-def get_access_token(payload, day):
+def get_access_token(payload, days):
     token = jwt.encode(
-        {'exp': datetime.now() + datetime.timedelta(days=1), **payload },
+        {'exp': timezone.now() + timedelta(days=days), **payload },
         key= settings.SECRET_KEY, algorithm='HS256'
     )
     return token

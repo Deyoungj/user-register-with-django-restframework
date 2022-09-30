@@ -8,9 +8,7 @@ from .views import (
 )
 
 
-router = routers.DefaultRouter(trailing_slash=False)
-
-router.register("create-user", CreateUserView, 'create')
+router = routers.DefaultRouter()
 
 router.register('create-user', CreateUserView, 'create user')
 router.register('login', LoginView, 'login')

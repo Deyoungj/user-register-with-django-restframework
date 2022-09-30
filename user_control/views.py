@@ -51,7 +51,7 @@ class LoginView(ModelViewSet):
 
         user = authenticate(
             username= valid_request.validated_data["email"],
-            password= valid_request.validated_data("password",None)
+            password= valid_request.validated_data["password"]
         )
             
         if not user:

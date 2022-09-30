@@ -1,7 +1,7 @@
 from random import choices
 from django.forms import CharField
 from rest_framework import serializers
-from .models import Student,Package, PackageEnroled, GENDER_CHOICES
+from .models import Student,Package, PackageEnroled
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -10,9 +10,9 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = "__all__"
 
-class PackageSerializer(serializers.Serializer):
+class PackageSerializer(serializers.ModelSerializer):
     class Meta:
-        moodel = Package
+        model = Package
         fields = "__all__"
 
 
