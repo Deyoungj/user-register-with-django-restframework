@@ -25,6 +25,9 @@ class Tutor(models.Model):
     adress = models.CharField(max_length=100, unique=True)
     package= models.ManyToManyField(Package)
 
+    def __str__(self):
+        return self.fullname
+
 class Student(models.Model):
     fullname = models.CharField(max_length=255)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=7)
