@@ -18,9 +18,11 @@ def decodeJWT(bearer):
         return None
 
     token = bearer[7:]
+    print('Decoding token', token)
 
     try:
-        decoded = jwt.decode(token, settings.SECRET_KEY, algorithm='HS256')
+        decoded = jwt.decode(token, key= settings.SECRET_KEY, algorithm='HS256')
+        print('Decoded bool token', decoded)
     except Exception:
         return None
 

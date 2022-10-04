@@ -93,6 +93,6 @@ class MeView(ModelViewSet):
     serializer_class = CustomUserSerializer
     permission_classes = (IsAuthenticatedCustom,)
 
-    def list(self, request):
-        data = self.serializer_class(data=request.data)
-        return Response(data)
+    # def list(self, request):
+    #     data = self.serializer_class(data=request.data)
+    #     return Response(data)

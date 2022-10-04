@@ -18,6 +18,13 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
+class Tutor(models.Model):
+    fullname = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(unique=True)
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=8)
+    adress = models.CharField(max_length=100, unique=True)
+    package= models.ManyToManyField(Package)
+
 class Student(models.Model):
     fullname = models.CharField(max_length=255)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=7)
@@ -36,6 +43,7 @@ class Student(models.Model):
 class PackageEnroled(models.Model):
     package = models.ForeignKey(Package, related_name='package', on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name='student', on_delete=models.SET_NULL, null=True)
+    tutor = models.ForeignKey(Tutor, related_name='tutor', on_delete= models.SET_NULL, null=True)
     date_enrolled = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(null=True, blank=True)
 
