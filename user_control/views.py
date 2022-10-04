@@ -15,7 +15,7 @@ class CreateUserView(ModelViewSet):
     http_method_names = ['post']
     serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
-    permission_classes = (IsAuthenticatedCustom,)
+    # permission_classes = (IsAuthenticatedCustom,)
 
     def create(self, request):
         valid_request =  self.serializer_class(data=request.data)
