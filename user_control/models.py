@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .custom_manager import CustomUserManager
 
@@ -27,3 +28,13 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 
     class Meta:
         ordering = ('-created_at',)
+
+    
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+
