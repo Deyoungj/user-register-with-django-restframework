@@ -1,13 +1,12 @@
-from ast import Is
+from .utils import generate_user_tokens
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (CreateUserSerializer,
- CustomUser, LoginSerializer,
-  UpdatePasswordSerializer, CustomUserSerializer)
+                            CustomUser, LoginSerializer,
+                            UpdatePasswordSerializer, CustomUserSerializer)
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from datetime import datetime
 from rest_framework import status
-from .utils import get_access_token
 from teamCSG.custom_method import IsAuthenticatedCustom
 
 
@@ -36,18 +35,6 @@ class LoginView(ModelViewSet):
     def create(self, request):
         valid_request = self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
-
-        new_user = valid_request.validated_data["is_new_user"]
-
-        if new_user:
-            user = CustomUser.objects.filter(email = valid_request.validated_data["email"])
-
-            if user:
-                user = user[0]
-                if not user.password:
-                    return Response({'user_id': user.id})
-                else:
-                    raise Exception('user already has Password')
 
         user = authenticate(
             username= valid_request.validated_data["email"],
