@@ -24,6 +24,7 @@ class Tutor(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=8)
     adress = models.CharField(max_length=100, unique=True)
     package= models.ManyToManyField(Package)
+    image = models.ImageField(upload_to='tutor_images', default='default.jpg')
 
     def __str__(self):
         return self.fullname
@@ -35,7 +36,7 @@ class Student(models.Model):
     phone_number = models.CharField(max_length=15, null=True)
     address = models.CharField(max_length=255,null=True)
     student_id = models.CharField(editable=False, unique=True, max_length=20,default=generate_student_id)
-    image = models.ImageField(upload_to='images', default='default.jpg')
+    image = models.ImageField(upload_to='student_images', default='default.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
 
 
