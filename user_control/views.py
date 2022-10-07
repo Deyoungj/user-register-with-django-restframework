@@ -5,7 +5,6 @@ from .serializers import (CreateUserSerializer,
                             UpdatePasswordSerializer, CustomUserSerializer)
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from datetime import datetime
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -15,13 +14,13 @@ class CreateUserView(ModelViewSet):
     http_method_names = ['post']
     serializer_class= CreateUserSerializer
     queryset = CustomUser.objects.all()
-    # permission_classes = (IsAuthenticatedCustom,)
+    permission_classes = [AllowAny]
 
     def create(self, request):
         valid_request =  self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
-        print('User created: with data: '**valid_request)
-        print('User created: with valid data: '**valid_request.validated_data)
+        print('User created: with data: ',request.data)
+        # print('User created: with valid data: ',**valid_request.validated_data)
         CustomUser.objects.create(**valid_request.validated_data)
         return Response(
             {"success":"User created successfully"},
