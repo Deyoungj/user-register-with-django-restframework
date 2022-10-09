@@ -1,1 +1,1 @@
-# teamCSG
+# user-register-with-django-restframework
